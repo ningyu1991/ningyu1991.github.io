@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Recent advances in Generative Adversarial Networks (GANs) have shown increasing success in generating photorealistic images. But they also raise challenges to visual forensics and model attribution. We present the first study of learning GAN fingerprints towards image attribution and using them to classify an image as real or GAN-generated. For GAN-generated images, we further identify their sources. Our experiments show that (1) GANs carry distinct model fingerprints and leave stable fingerprints in their generated images, which support image attribution; (2) even minor differences in GAN training can result in different fingerprints, which enables fine-grained model authentication; (3) fingerprints persist across different image frequencies and patches and are not biased by GAN artifacts; (4) fingerprint finetuning is effective in immunizing against five types of adversarial image perturbations; and (5) comparisons also show our learned fingerprints consistently outperform several baselines in a variety of setups."
+>
+<meta name="keywords" content="GAN; fingerprints; deep fake detection; attribution; forensics; security;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/1811.08180.pdf" target="_blank" rel="nofollow">Attributing Fake Images to GANs:<br>Learning and Analyzing GAN Fingerprints</a></h1>
+    <h2>ICCV 2019</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://users.umiacs.umd.edu/~lsd/" target="_blank" rel="nofollow">Larry Davis</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://cispa.saarland/group/fritz/" target="_blank" rel="nofollow">Mario Fritz</a><sup>3</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Maryland&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. Max Planck Institute for Informatics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. CISPA Helmholtz Center for Information Security
+    </div>
+</div>
+      
+    <center><img src="./GANFingerprints/teaser.png" border="0" width="90%"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Recent advances in Generative Adversarial Networks (GANs) have shown increasing success in generating photorealistic images. But they also raise challenges to visual forensics and model attribution. We present the first study of learning GAN fingerprints towards image attribution and using them to classify an image as real or GAN-generated. For GAN-generated images, we further identify their sources. Our experiments show that (1) GANs carry distinct model fingerprints and leave stable fingerprints in their generated images, which support image attribution; (2) even minor differences in GAN training can result in different fingerprints, which enables fine-grained model authentication; (3) fingerprints persist across different image frequencies and patches and are not biased by GAN artifacts; (4) fingerprint finetuning is effective in immunizing against five types of adversarial image perturbations; and (5) comparisons also show our learned fingerprints consistently outperform several baselines in a variety of setups.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <center><img src="./GANFingerprints/demo_GAN_fingerprints.gif" border="0" width="90%"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="https://arxiv.org/pdf/1811.08180.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./GANFingerprints/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="https://arxiv.org/pdf/1811.08180.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/poster_GANFingerprints.pdf" target="_blank" rel="nofollow"><img style="height:175px" src="./GANFingerprints/poster_GANFingerprints.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/poster_GANFingerprints.pdf" target="_blank" rel="nofollow">Poster</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/GANFingerprints" target="_blank" rel="nofollow"><img src="./GANFingerprints/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+<br>
+
+<div class="section press">
+  <h2>Press coverage</h2>
+  <center>
+    <a href="https://mp.weixin.qq.com/s/se1ZyR_gfzliWB5X72OZ1Q" target="_blank" rel="nofollow"><img src="./GANFingerprints/press_GANFingerprints.gif" width="270 px"></a>
+    <br>
+    <a href="https://mp.weixin.qq.com/s/se1ZyR_gfzliWB5X72OZ1Q" target="_blank" rel="nofollow">thejiangmen Academia News</a>
+  </center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2019attributing,
+  author = {Yu, Ning and Davis, Larry and Fritz, Mario},
+  title = {Attributing Fake Images to GANs: Learning and Analyzing GAN Fingerprints},
+  booktitle = {IEEE International Conference on Computer Vision (ICCV)},
+  year = {2019}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  We thank <a href="http://users.umiacs.umd.edu/~hzhou/" target="_blank" rel="nofollow">Hao Zhou</a> for helping with the relighting experiments. We also thank <a href="https://www.umiacs.umd.edu/people/yaser" target="_blank" rel="nofollow">Yaser Yacoob</a> and <a href="http://abhinavsh.info/" target="_blank" rel="nofollow">Abhinav Shrivastava</a> for constructive advice in general. This research is partially funded by DARPA MediFor program under cooperative agreement FA87501620191. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the DARPA.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./GANFingerprints/logo_DoGANLeaveFingerprints.jpg" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8695364" target="_blank" rel="nofollow">F. Marra, D. Gragnaniello, L. Verdoliva, G. Poggi. Do GANs leave artificial fingerprints? MIPR 2019.</a><br>
+          <b>Comment:</b> A baseline method that extracts shallow fingerprints to detect GAN-generated images.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./GANFingerprints/logo_ProGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1710.10196.pdf?__hstc=200028081.1bb630f9cde2cb5f07430159d50a3c91.1524009600081.1524009600082.1524009600083.1&__hssc=200028081.1.1524009600084&__hsfp=1773666937" target="_blank" rel="nofollow">T. Karras, T. Aila, S. Laine, J. Lehtinen. Progressive Growing of Gans for Improved Quality, Stability, and Variation. ICLR 2018.</a><br>
+          <b>Comment:</b> A state-of-the-art GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./GANFingerprints/logo_SNGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1802.05957.pdf" target="_blank" rel="nofollow">T. Miyato, T. Kataoka, M. Koyama, Y. Yoshida. Spectral Normalization for Generative Adversarial Networks. ICLR 2018.</a><br>
+          <b>Comment:</b> A state-of-the-art GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./GANFingerprints/logo_CramerGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1705.10743.pdf" target="_blank" rel="nofollow">M. Bellemare, I. Danihelka, W. Dabney, S. Mohamed, B. Lakshminarayanan, S. Hoyer, R. Munos. The Cramer Distance as a Solution to Biased Wasserstein Gradients. arXiv 2017.</a><br>
+          <b>Comment:</b> A state-of-the-art GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./GANFingerprints/logo_MMDGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1705.08584.pdf" target="_blank" rel="nofollow">C.L. Li, W.C. Chang, Y. Cheng, Y. Yang, B. Póczos. MMD GAN: Towards Deeper Understanding of Moment Matching Network. NeurIPS 2017.</a><br>
+          <b>Comment:</b> A state-of-the-art GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
