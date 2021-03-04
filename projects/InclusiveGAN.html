@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Inclusive GAN: Improving Data and Minority Coverage in Generative Models</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Generative Adversarial Networks (GANs) have brought about rapid progress towards generating photorealistic images. Yet the equitable allocation of their modeling capacity among subgroups has received less attention, which could lead to potential biases against underrepresented minorities if left uncontrolled. In this work, we first formalize the problem of minority inclusion as one of data coverage, and then propose to improve data coverage by harmonizing adversarial training with reconstructive generation. The experiments show that our method outperforms the existing state-of-the-art methods in terms of data coverage on both seen and unseen data. We develop an extension that allows explicit control over the minority subgroups that the model should ensure to include, and validate its effectiveness at little compromise from the overall performance on the entire dataset."
+>
+<meta name="keywords" content="GAN; reconstruction; mode collapse; data coverage; minority inclusion; AI fairness; bias; data imbalance;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/2004.03355.pdf" target="_blank" rel="nofollow">Inclusive GAN: Improving Data and Minority Coverage in Generative Models</a></h1>
+    <h2>ECCV 2020</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.math.ias.edu/~ke.li/" target="_blank" rel="nofollow">Ke Li</a><sup>3,5,6</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://pengzhou1108.github.io/" target="_blank" rel="nofollow">Peng Zhou</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://people.eecs.berkeley.edu/~malik/" target="_blank" rel="nofollow">Jitendra Malik</a><sup>3</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://users.umiacs.umd.edu/~lsd/" target="_blank" rel="nofollow">Larry Davis</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://cispa.saarland/group/fritz/" target="_blank" rel="nofollow">Mario Fritz</a><sup>4</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Maryland&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. Max Planck Institute for Informatics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. University of California, Berkeley&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+      4. CISPA Helmholtz Center for Information Security&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      5. Institute for Advanced Study&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      6. Google&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+</div>
+      
+    <center><img src="./InclusiveGAN/teaser.png" border="0" width="60%"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Generative Adversarial Networks (GANs) have brought about rapid progress towards generating photorealistic images. Yet the equitable allocation of their modeling capacity among subgroups has received less attention, which could lead to potential biases against underrepresented minorities if left uncontrolled. In this work, we first formalize the problem of minority inclusion as one of data coverage, and then propose to improve data coverage by harmonizing adversarial training with reconstructive generation. The experiments show that our method outperforms the existing state-of-the-art methods in terms of data coverage on both seen and unseen data. We develop an extension that allows explicit control over the minority subgroups that the model should ensure to include, and validate its effectiveness at little compromise from the overall performance on the entire dataset.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Optimization for image reconstruction</h3>
+  <center><img src="./InclusiveGAN/rec_optimization.gif" border="0" width="50%"></center>
+  <h3>Minority reconstruction</h3>
+  <center><img src="./InclusiveGAN/rec_minority.png" border="0" width="90%"></center>
+  <h3>Interpolation from majority to minority</h3>
+  <h4><em>Eyeglasses</em></h4>
+  <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Majority real&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StyleGAN2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours general&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours minority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minority real</h4>
+  <center><img src="./InclusiveGAN/interp_Eyeglasses.gif" border="0" width="80%"></center>
+  <h4><em>Bald</em></h4>
+  <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Majority real&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StyleGAN2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours general&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours minority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minority real</h4>
+  <center><img src="./InclusiveGAN/interp_Bald.gif" border="0" width="80%"></center>
+  <h4><em>Narrow_Eyes&Heavy_Makeup</em></h4>
+  <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Majority real&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StyleGAN2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours general&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours minority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minority real</h4>
+  <center><img src="./InclusiveGAN/interp_Narrow_Eyes_and_Heavy_Makeup.gif" border="0" width="80%"></center>
+  <h4><em>Bags_Under_Eyes&High_Cheekbones&Attractive</em></h4>
+  <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Majority real&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StyleGAN2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours general&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ours minority&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minority real</h4>
+  <center><img src="./InclusiveGAN/interp_Bags_Under_Eyes_and_High_Cheekbones_and_Attractive.gif" border="0" width="80%"></center>
+</div>
+
+<div class="section demo">
+  <h2>Paper full video</h2>
+  <br>
+  <center><iframe width="840" height="560"
+    src="https://www.youtube.com/embed/oCb4cpsQ7do">
+    </iframe></center>
+</div>
+
+<div class="section paper">
+	<h2>Paper</h2>
+  <center>
+    <a href="https://arxiv.org/pdf/2004.03355.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./InclusiveGAN/page1.png"></a>
+  </center>
+</div>
+<br>
+        
+<div class="section code">
+	<h2>Code</h2>
+	<center>
+    <a href="https://github.com/ningyu1991/InclusiveGAN" target="_blank" rel="nofollow"><img src="./InclusiveGAN/icon_arXiv.png" width="270 px"></a>
+	</center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2020inclusive,
+  author={Yu, Ning and Li, Ke and Zhou, Peng and Malik, Jitendra and Davis, Larry and Fritz, Mario},
+  title={Inclusive GAN: Improving Data and Minority Coverage in Generative Models},
+  journal={European Conference on Computer Vision (ECCV)},
+  year={2020},
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  We acknowledge <a href="http://richzhang.github.io/" target="_blank" rel="nofollow">Richard Zhang</a> and <a href="https://cispa.de/en/people/dingfan.chen#publications" target="_blank" rel="nofollow">Dingfan Chen</a> for their constructive advice in general. This project was partially funded by DARPA MediFor program under cooperative agreement FA87501620191 and by ONR MURI N00014-14-1-0671. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the DARPA or ONR MURI.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./InclusiveGAN/logo_StyleGAN2.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1912.04958" target="_blank" rel="nofollow">K. Tero, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, T. Aila. Analyzing and Improving the Image Quality of StyleGAN. CVPR 2020.</a><br>
+          <b>Comment:</b> A baselines method that is used as our GAN backbone.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./InclusiveGAN/logo_IMLE.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1809.09087" target="_blank" rel="nofollow">K. Li, J. Malik. Implicit Maximum Likelihood Estimation. arXiv 2018.</a><br>
+          <b>Comment:</b> A baselines method that is used in our reconstruction term.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./InclusiveGAN/logo_LPIPS.jpg" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1801.03924" target="_blank" rel="nofollow">R. Zhang, P. Isola, A. Efros, E. Shechtman, O. Wang. The Unreasonable Effectiveness of Deep Features as a Perceptual Metric. CVPR 2018.</a><br>
+          <b>Comment:</b> A deep image similarity metric, which is used to formulate our reconstruction term and harmonize reconstruction with adversarial training.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./InclusiveGAN/logo_VAEGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1512.09300" target="_blank" rel="nofollow">A. Larsen, S. Sønderby, H. Larochelle, O. Winther. Autoencoding beyond pixels using a learned similarity metric. ICML 2016</a><br>
+          <b>Comment:</b> A basedline method that uses image reconstruction to improve mode collapse in GAN training.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./InclusiveGAN/logo_VEEGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1705.07761.pdf" target="_blank" rel="nofollow">A. Srivastava, L. Valkov, C. Russell, M. Gutmann, C. Sutton. VEEGAN: Reducing Mode Collapse in GANs using Implicit Variational Learning. NeurIPS 2017</a><br>
+          <b>Comment:</b> A basedline method that uses latent reconstruction to improve mode collapse in GAN training.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
