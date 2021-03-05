@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Texture Mixer: A Network for Controllable Synthesis and Interpolation of Texture</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="This paper addresses the problem of interpolating visual textures. We formulate this problem by requiring (1) by-example controllability and (2) realistic and smooth interpolation among an arbitrary number of texture samples. To solve it we propose a neural network trained simultaneously on a reconstruction task and a generation task, which can project texture examples onto a latent space where they can be linearly interpolated and projected back onto the image domain, thus ensuring both intuitive control and realistic results. We show our method outperforms a number of baselines according to a comprehensive suite of metrics as well as a user study. We further show several applications based on our technique, which include texture brush, texture dissolve, and animal hybridization."
+>
+<meta name="keywords" content="texture synthesis; GAN; reconstruction; interpolation; user control;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/1901.03447.pdf" target="_blank" rel="nofollow">Texture Mixer: A Network for Controllable Synthesis and Interpolation of Texture</a></h1>
+    <h2>CVPR 2019</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1,2,4</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://www.connellybarnes.com/work/" target="_blank" rel="nofollow">Connelly Barnes</a><sup>3,4</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://research.adobe.com/person/eli-shechtman/" target="_blank" rel="nofollow">Eli Shechtman</a><sup>3</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/sohrab-amirghodsi-a89548a3/" target="_blank" rel="nofollow">Sohrab Amirghodsi</a><sup>3</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://research.adobe.com/person/michal-lukac/" target="_blank" rel="nofollow">Michal Lukáč</a><sup>3</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Maryland&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. Max Planck Institute for Informatics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. Adobe Research&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      4. University of Virginia
+    </div>
+</div>
+      
+    <center><img src="./TextureMixer/teaser.png" border="0" width=400px>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./TextureMixer/pipeline.png" border="0" width=400px></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    This paper addresses the problem of interpolating visual textures. We formulate this problem by requiring (1) by-example controllability and (2) realistic and smooth interpolation among an arbitrary number of texture samples. To solve it we propose a neural network trained simultaneously on a reconstruction task and a generation task, which can project texture examples onto a latent space where they can be linearly interpolated and projected back onto the image domain, thus ensuring both intuitive control and realistic results. We show our method outperforms a number of baselines according to a comprehensive suite of metrics as well as a user study. We further show several applications based on our technique, which include texture brush, texture dissolve, and animal hybridization.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Texture Interpolation 128x1024</h3>
+  <center><img src="./TextureMixer/horizontal_interp.png" border="0" width="50%"></center>
+  <h3>Texture Dissolve 1024x1024</h3>
+  <center><img src="./TextureMixer/texture_dissolve_animal.gif" border="0" width="45%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="./TextureMixer/texture_dissolve_plant.gif" border="0" width="45%"></center>
+  <h3>Texture Brush 512x2048</h3>
+  <center><img src="./TextureMixer/texture_brush_animal.gif" border="0" width="90%"></center>
+  <br>
+  <center><img src="./TextureMixer/texture_brush_earth.gif" border="0" width="90%"></center>
+  <br>
+  <center><img src="./TextureMixer/texture_brush_plant.gif" border="0" width="90%"></center>
+  <h3>Animal hybridization</h3>
+  <center><img src="./TextureMixer/beardog.png" border="0" width="90%"></center>
+  <br>
+  <center><img src="./TextureMixer/leoraffe.png" border="0" width="90%"></center>
+  <br>
+  <center><img src="./TextureMixer/ziger.png" border="0" width="90%"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="https://arxiv.org/pdf/1901.03447.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./TextureMixer/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="https://arxiv.org/pdf/1901.03447.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/poster_TextureMixer.pdf" target="_blank" rel="nofollow"><img style="height:175px" src="./TextureMixer/poster_TextureMixer.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/poster_TextureMixer.pdf" target="_blank" rel="nofollow">Poster</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/TextureMixer" target="_blank" rel="nofollow"><img src="./TextureMixer/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+<br>
+
+<div class="section press">
+  <h2>Press coverage</h2>
+  <center>
+    <a href="https://mp.weixin.qq.com/s/b_gIB_zpUCcf2a8ImKMXRA" target="_blank" rel="nofollow"><img src="./TextureMixer/press_TextureMixer.jpeg" width="130 px"></a>
+    <br>
+    <br>
+    <a href="https://mp.weixin.qq.com/s/b_gIB_zpUCcf2a8ImKMXRA" target="_blank" rel="nofollow">QbitAI Academia News</a>
+  </center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2019texture,
+  author = {Yu, Ning and Barnes, Connelly and Shechtman, Eli and Amirghodsi, Sohrab and Luk\'{a}\v{c}, Michal},
+  title = {Texture Mixer: A Network for Controllable Synthesis and Interpolation of Texture},
+  booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year = {2019}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  This research is supported by Adobe Research Funding. We thank to the <a href="https://www.flickr.com/" target="_blank" rel="nofollow">Flickr</a> photographers for licensing photos under Creative Commons or public domain.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./TextureMixer/logo_ProGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1710.10196.pdf?__hstc=200028081.1bb630f9cde2cb5f07430159d50a3c91.1524009600081.1524009600082.1524009600083.1&__hssc=200028081.1.1524009600084&__hsfp=1773666937" target="_blank" rel="nofollow">T. Karras, T. Aila, S. Laine, J. Lehtinen. Progressive Growing of Gans for Improved Quality, Stability, and Variation. ICLR 2018.</a><br>
+          <b>Comment:</b> The state-of-the-art GAN infrastructure for our backbone implementation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./TextureMixer/logo_PSGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1705.06566" target="_blank" rel="nofollow">U. Bergmann, N. Jetchev, R. Vollgraf. Learning Texture Manifolds with the Periodic Spatial GAN. ICML 2017.</a><br>
+          <b>Comment:</b> A texture synthesis baseline method that is based on GAN manifold interpolation and does not support user control.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./TextureMixer/logo_ImageMelding.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://web.ece.ucsb.edu/~psen/Papers/SIGGRAPH12_ImageMelding.pdf" target="_blank" rel="nofollow"> S. Darabi, E. Shechtman, C. Barnes, D. Goldman, P. Sen. Image Melding: Combining Inconsistent Images using Patch-based Synthesis. SIGGRAPH 2012.</a><br>
+          <b>Comment:</b> A texture synthesis baseline method that is prior to deep learng age, uses hand-crafted features, and is not efficient due to the optimization per case.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./TextureMixer/logo_WCT.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1705.08086.pdf" target="_blank" rel="nofollow"> Y. Li, C. Fang, J. Yang, Z. Wang, X. Lu, M.H. Yang. Universal Style Transfer via Feature Transforms. NeurIPS 2017.</a><br>
+          <b>Comment:</b> A texture synthesis baseline method that is based on style transfer and does not support input reconstruction.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
