@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Learning to Detect Multiple Photographic Defects</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="In this paper, we introduce the problem of simultaneously detecting multiple photographic defects. We aim at detecting the existence, severity, and potential locations of common photographic defects related to color, noise, blur and composition. The automatic detection of such defects could be used to provide users with suggestions for how to improve photos without the need to laboriously try various correction methods. Defect detection could also help users select photos of higher quality while filtering out those with severe defects in photo curation and summarization. To investigate this problem, we collected a large-scale dataset of user annotations on seven common photographic defects, which allows us to evaluate algorithms by measuring their consistency with human judgments. Our new dataset enables us to formulate the problem as a multi-task learning problem and train a multi-column deep convolutional neural network (CNN) to simultaneously predict the severity of all the defects. Unlike some existing single-defect estimation methods that rely on low-level statistics and may fail in many cases on natural photographs, our model is able to understand image contents and quality at a higher level. As a result, in our experiments, we show that our model has predictions with much higher consistency with human judgments than low-level methods as well as several baseline CNN models. Our model also performs better than an average human from our user study."
+>
+<meta name="keywords" content="photographic defects; automatic detection; curation; summarization; multi-column CNN;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/1612.01635.pdf" target="_blank" rel="nofollow">Learning to Detect Multiple Photographic Defects</a></h1>
+    <h2>WACV 2018</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://xiaohuishen.github.io/" target="_blank" rel="nofollow">Xiaohui Shen</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://sites.google.com/site/zhelin625/" target="_blank" rel="nofollow">Zhe Lin</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://research.adobe.com/person/radomir-mech/" target="_blank" rel="nofollow">Radomír Měch</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://www.connellybarnes.com/work/" target="_blank" rel="nofollow">Connelly Barnes</a><sup>1,2</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Virginina&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. Adobe Research
+    </div>
+</div>
+      
+    <center><img src="./DefectDetection/teaser.jpg" border="0" width="600px"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    In this paper, we introduce the problem of simultaneously detecting multiple photographic defects. We aim at detecting the existence, severity, and potential locations of common photographic defects related to color, noise, blur and composition. The automatic detection of such defects could be used to provide users with suggestions for how to improve photos without the need to laboriously try various correction methods. Defect detection could also help users select photos of higher quality while filtering out those with severe defects in photo curation and summarization. To investigate this problem, we collected a large-scale dataset of user annotations on seven common photographic defects, which allows us to evaluate algorithms by measuring their consistency with human judgments. Our new dataset enables us to formulate the problem as a multi-task learning problem and train a multi-column deep convolutional neural network (CNN) to simultaneously predict the severity of all the defects. Unlike some existing single-defect estimation methods that rely on low-level statistics and may fail in many cases on natural photographs, our model is able to understand image contents and quality at a higher level. As a result, in our experiments, we show that our model has predictions with much higher consistency with human judgments than low-level methods as well as several baseline CNN models. Our model also performs better than an average human from our user study.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Defect detection</h3>
+  <center><img src="./DefectDetection/detection.jpg" border="0" width="600px"></center>
+  <h3>Defect localization</h3>
+  <center><img src="./DefectDetection/localization.jpg" border="0" width="600px"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="https://arxiv.org/pdf/1612.01635.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./DefectDetection/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="https://arxiv.org/pdf/1612.01635.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/supp_DefectDetection.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./DefectDetection/supp_page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/supp_DefectDetection.pdf" target="_blank" rel="nofollow">Supplementary material</a>
+          </center>
+        </td>
+      </tr>
+      <tr style="border: none;">  
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/poster_DefectDetection.pdf" target="_blank" rel="nofollow"><img style="height:175px" src="./DefectDetection/poster_DefectDetection.png"></a>
+            <br>
+            <a href="../homepage_files/poster_DefectDetection.pdf" target="_blank" rel="nofollow">Poster</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/slides_DefectDetection.pptx" target="_blank" rel="nofollow"><img style="height:175px" src="./DefectDetection/slides_page1.png"></a>
+            <br>
+            <a href="../homepage_files/slides_DefectDetection.pptx" target="_blank" rel="nofollow">Slides</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/DefectDetection" target="_blank" rel="nofollow"><img src="./DefectDetection/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+<br>
+
+<div class="section code">
+  <h2>Dataset</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/DefectDetection/tree/master/data" target="_blank" rel="nofollow"><img src="./DefectDetection/icon_dataset.png" width="130 px"></a>
+    <br>
+    <br>
+    <a href="https://github.com/ningyu1991/DefectDetection/tree/master/data" target="_blank" rel="nofollow">Images with seven photographic defect severity annotations</a>
+  </center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2018learning,
+  author = {Yu, Ning and Shen, Xiaohui and Lin, Zhe and M{\v e}ch, Radom{\' i}r and Barnes, Connelly},
+  title = {Learning to Detect Multiple Photographic Defects},
+  booktitle = {IEEE Winter Conference on Applications of Computer Vision (WACV)},
+  year = {2018}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  This research is supported by Adobe Research Funding. We thank to the <a href="https://www.flickr.com/" target="_blank" rel="nofollow">Flickr</a> photographers for licensing photos under Creative Commons or public domain.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./DefectDetection/logo_AestheticsRanking.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://www.ics.uci.edu/~fowlkes/papers/kslmf-eccv16.pdf" target="_blank" rel="nofollow">S. Kong, X. Shen, Z. Lin, R. Mech, C. Fowlkes. Photo Aesthetics Ranking Network with Attributes and Content Adaptation. ECCV 2016.</a><br>
+          <b>Comment:</b> A ranking-based deep classifier for aesthetics assessment, similar in spirit of our design for photographic defect ranking.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./DefectDetection/logo_Denoising.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6607209" target="_blank" rel="nofollow">X. Liu, M. Tanaka, M. Okutomi. Single-Image Noise Level Estimation for Blind Denoising. TIP 2013.</a><br>
+          <b>Comment:</b> A denoising baseline method that does not match human judgement well on noise severity.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./DefectDetection/logo_Dehazing.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5567108" target="_blank" rel="nofollow">K. He, J. Sun, X. Tang. Single Image Haze Removal Using Dark Channel Prior. PAMI 2011.</a><br>
+          <b>Comment:</b> A dehazing baseline method that does not match human judgement well on haze severity.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./DefectDetection/logo_Deblurring.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5539954" target="_blank" rel="nofollow">A. Chakrabarti, T. Zickler, W. Freeman. Analyzing Spatially-Varying Blur. CVPR 2010.</a><br>
+          <b>Comment:</b> A deblurring baseline method that does not match human judgement well on blur severity.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
