@@ -6,7 +6,7 @@
 <meta name="robots" content="index,follow">
 <meta name="description" content="Multi-atlas segmentation serves as an important technique for quantitative analysis of medical images. In many applications, top performing techniques rely on computationally expensive deformable registration to transfer labels from atlas images to the target image. We propose a more computationally efficient label transfer strategy that uses supervoxel matching regularized by Markov random field (MRF), followed by regional voxel-wise joint label fusion and a second MRF. We evaluate this hierarchical MRF framework for multi-label diencephalon segmentation from the MICCAI 2013 SATA Challenge. Our segmentation results are comparable to the top-tier one obtained by deformable registration, but with much lower computational complexity."
 >
-<meta name="keywords" content="brain tumor; segmentation; multi-atlas; supervoxel; superpixel; Markov random field; registration;">
+<meta name="keywords" content="brain; MRI; tumor segmentation; multi-atlas; supervoxel; superpixel; Markov random field; registration;">
 <link rel="author" href="https://ningyu1991.github.io/">
 
 <!-- Fonts and stuff -->
@@ -130,11 +130,20 @@
     <table style="border-collapse: collapse; border: none;"><tbody>
       <tr style="border: none;">
         <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_SLIC.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6205760" target="_blank" rel="nofollow">R. Achanta, A. Shaji, K. Smith, A. Lucchi, P. Fua, S. Süsstrunk. SLIC Superpixels Compared to State-of-the-Art Superpixel Methods. PAMI 2012.</a><br>
+          <b>Comment:</b> The SLIC algorithm that is used in our work for supervoxel oversegmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
           <img src="./SupervoxelMRFSeg/logo_FastPD.png" class="publogo" width="200 px">
         </td>
         <td style="border: none;">
           <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.414.6433&rep=rep1&type=pdf" target="_blank" rel="nofollow">B. Glocker, N. Komodakis, G. Tziritas, N. Navab, N. Paragios. Dense Image Registration through MRFs and Efficient Linear Programming. MIA 2008.</a><br>
-          <b>Comment:</b> The FastPD algorithm that is used in our work to solve Markov Random Fields.
+          <b>Comment:</b> The Fast-PD algorithm that is used in our work to solve Markov Random Fields.
         </td>
       </tr>
       <tr style="border: none;">

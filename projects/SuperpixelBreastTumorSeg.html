@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>A Superpixel-Based Framework for Automatic Tumor Segmentation on Breast DCE-MRI</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Accurate and efficient automated tumor segmentation in breast dynamic contrast-enhanced magnetic resonance imaging (DCE-MRI) is highly desirable for computer-aided tumor diagnosis. We propose a novel automatic segmentation framework which incorporates mean-shift smoothing, superpixel-wise classification, pixel-wise graph-cuts partitioning, and morphological refinement. A set of 15 breast DCE-MR images, obtained from the American College of Radiology Imaging Network (ACRIN) 6657 I-SPY trial, were manually segmented to generate tumor masks (as ground truth) and breast masks (as regions of interest). Four state-of-the-art segmentation approaches based on diverse models were also utilized for comparison. Based on five standard evaluation metrics for segmentation, the proposed framework consistently outperformed all other approaches. The performance of the proposed framework was: 1) 0.83 for Dice similarity coefficient, 2) 0.96 for pixel-wise accuracy, 3) 0.72 for VOC score, 4) 0.79 mm for mean absolute difference, and 5) 11.71 mm for maximum Hausdorff distance, which surpassed the second best method (i.e., adaptive geodesic transformation), a semi-automatic algorithm depending on precise initialization. Our results suggest promising potential applications of our segmentation framework in assisting analysis of breast carcinomas."
+>
+<meta name="keywords" content="breast; DCE-MRI; tumor segmentation; superpixel; graph-cuts;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="../homepage_files/paper_SuperpixelBreastTumorSeg.pdf" target="_blank" rel="nofollow">A Superpixel-Based Framework for Automatic Tumor Segmentation on Breast DCE-MRI</a></h1>
+    <h2>SPIE Medical Imaging 2015 (oral, best student paper finalist)</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://sites.google.com/view/wuanderson/home?authuser=0" target="_blank" rel="nofollow">Jia Wu</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.med.upenn.edu/apps/faculty/index.php/g334/p18174" target="_blank" rel="nofollow">Susan Weinstein</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.com/citations?user=VmHVNSMAAAAJ&hl=en" target="_blank" rel="nofollow">Bilwaj Gaonkar</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.com/citations?user=riiWVF8AAAAJ&hl=zh-CN" target="_blank" rel="nofollow">Brad Keller</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://home.cc.umanitoba.ca/~ashrafa/" target="_blank" rel="nofollow">Ahmed Ashraf</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.com/citations?user=2Fs8-60AAAAJ&hl=en" target="_blank" rel="nofollow">YunQing Jiang</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      <a href="https://www.med.upenn.edu/cbica/christos/" target="_blank" rel="nofollow">Christos Davatzikos</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.pennmedicine.org/providers/profile/emily-conant" target="_blank" rel="nofollow">Emily Conant</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.med.upenn.edu/apps/faculty/index.php/g334/p8123294" target="_blank" rel="nofollow">Despina Kontos</a>
+
+    </div>
+
+    <div class="affiliations">
+      University of Pennsylvania
+    </div>
+</div>
+      
+    <center><img src="./SuperpixelBreastTumorSeg/teaser.png" border="0" width="600px"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Accurate and efficient automated tumor segmentation in breast dynamic contrast-enhanced magnetic resonance imaging (DCE-MRI) is highly desirable for computer-aided tumor diagnosis. We propose a novel automatic segmentation framework which incorporates mean-shift smoothing, superpixel-wise classification, pixel-wise graph-cuts partitioning, and morphological refinement. A set of 15 breast DCE-MR images, obtained from the American College of Radiology Imaging Network (ACRIN) 6657 I-SPY trial, were manually segmented to generate tumor masks (as ground truth) and breast masks (as regions of interest). Four state-of-the-art segmentation approaches based on diverse models were also utilized for comparison. Based on five standard evaluation metrics for segmentation, the proposed framework consistently outperformed all other approaches. The performance of the proposed framework was: 1) 0.83 for Dice similarity coefficient, 2) 0.96 for pixel-wise accuracy, 3) 0.72 for VOC score, 4) 0.79 mm for mean absolute difference, and 5) 11.71 mm for maximum Hausdorff distance, which surpassed the second best method (i.e., adaptive geodesic transformation), a semi-automatic algorithm depending on precise initialization. Our results suggest promising potential applications of our segmentation framework in assisting analysis of breast carcinomas.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Breast tumor segmentation</h3>
+  <center><img src="./SuperpixelBreastTumorSeg/segmentation.png" border="0" width="600px"></center>
+  <h3>Accuracy and comparisons</h3>
+  <center><img src="./SuperpixelBreastTumorSeg/results.png" border="0" width="400px"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/paper_SuperpixelBreastTumorSeg.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./SuperpixelBreastTumorSeg/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/paper_SuperpixelBreastTumorSeg.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/slides_SuperpixelBreastTumorSeg.pptx" target="_blank" rel="nofollow"><img style="height:175px" src="./SuperpixelBreastTumorSeg/slides_page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/slides_SuperpixelBreastTumorSeg.pptx" target="_blank" rel="nofollow">Slides</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+
+<div class="section press">
+  <h2>Press coverage</h2>
+  <center>
+    <a href="https://spie.org/about-spie/press-room/mi15-news" target="_blank" rel="nofollow"><img src="./SuperpixelBreastTumorSeg/press_SuperpixelBreastTumorSeg.png" width="270 px"></a>
+    <br>
+    <br>
+    <a href="https://spie.org/about-spie/press-room/mi15-news" target="_blank" rel="nofollow">SPIE News</a>
+  </center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2015superpixel,
+  author = {Yu, Ning and Wu, Jia and Weinstein, Susan and Gaonkar, Bilwaj and Keller, Brad and Ashraf, Ahmed and Jiang, YunQing and Davatzikos, Christos and Conant, Emily and Kontos, Despina},
+  title = {A Superpixel-Based Framework for Automatic Tumor Segmentation on Breast DCE-MRI},
+  booktitle = {SPIE Medical Imaging Conference},
+  year = {2015}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  This project is supported by funding from the University of Pennsylvania Abramson Cancer Center 2-PREVENT Center of Excellence Program and the Center for Biomedical Image Computing and Analytics (CBICA). We thank <a href="https://profiles.ucsf.edu/nola.hylton" target="_blank" rel="nofollow">Dr. Nola Hylton</a> from UCSF for the permission to use the I-SPY data and the useful discussions on this research work.
+
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_SLIC.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6205760" target="_blank" rel="nofollow">R. Achanta, A. Shaji, K. Smith, A. Lucchi, P. Fua, S. Süsstrunk. SLIC Superpixels Compared to State-of-the-Art Superpixel Methods. PAMI 2012.</a><br>
+          <b>Comment:</b> The SLIC algorithm that is used in our work for superpixel oversegmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_GraphCuts.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=969114" target="_blank" rel="nofollow">Y. Boykov, O. Veksler, R. Zabih. Fast Approximate Energy Minimization via Graph Cuts. PAMI 2001.</a><br>
+          <b>Comment:</b> The graph-cuts algorithm that is used in our work to solve segmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_AdaFCM.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://aapm.onlinelibrary.wiley.com/doi/pdf/10.1118/1.4736530" target="_blank" rel="nofollow">B. Keller, D. Nathan, Y. Wang, Y. Zheng, J. Gee, E. Conant, D. Kontos. Estimation of Breast Percent Density in Raw and Processed Full Field Digital Mammography Images via Adaptive Fuzzy C-Means Clustering and Support Vector mMchine Segmentation. Medical physics 2012.</a><br>
+          <b>Comment:</b> A baseline method that uses adaptive fuzzy C-means algorithm for tumor pxiel clustering and classification.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_Watershed.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://downloads.hindawi.com/journals/ddns/2008/384346.pdf" target="_blank" rel="nofollow">K. Parvati, B. Rao, M. Das. Image Segmentation Using Gray-Scale Morphology and Marker-Controlled Watershed Transformation. Discrete Dynamics in Nature and Society 2008.</a><br>
+          <b>Comment:</b> A baseline method that applies watershed transformation on the gradient image superimposed with markers for tumor segmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_AdaGeodesic.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="file:///Users/ningyu/Desktop/temp/903516.pdf" target="_blank" rel="nofollow">B. Gaonkar, L. Shu, G. Hermosillo, Y. Zhan. Adaptive Geodesic Transform for Segmentation of Vertebrae on CT Images. SPIE Medical Imaging 2014.</a><br>
+          <b>Comment:</b> A baseline method that applies geodesic transformation on the geodesic distance map fused with pixel intensity and gradient for tumor segmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SuperpixelBreastTumorSeg/logo_MRFLBP.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://link.springer.com/content/pdf/10.1007/978-3-642-23626-6_67.pdf" target="_blank" rel="nofollow">A. Ashraf, S. Gavenonis, D. Daye, C. Mies, M. Feldman, M. Rosen, D. Kontos. A Multichannel Markov Random Field Approach for Automated Segmentation of Breast Cancer Tumor in DCE-MRI Data Using Kinetic Observation Model. MICCAI 2011.</a><br>
+          <b>Comment:</b> A baseline method that models the topology of superpixels as a multi-channel Markov random field and converges the superpixel segementation through loopy belief propagation.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
