@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Supervoxel-Based Hierarchical Markov Random Field Framework for Multi-Atlas Segmentation</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Multi-atlas segmentation serves as an important technique for quantitative analysis of medical images. In many applications, top performing techniques rely on computationally expensive deformable registration to transfer labels from atlas images to the target image. We propose a more computationally efficient label transfer strategy that uses supervoxel matching regularized by Markov random field (MRF), followed by regional voxel-wise joint label fusion and a second MRF. We evaluate this hierarchical MRF framework for multi-label diencephalon segmentation from the MICCAI 2013 SATA Challenge. Our segmentation results are comparable to the top-tier one obtained by deformable registration, but with much lower computational complexity."
+>
+<meta name="keywords" content="brain tumor; segmentation; multi-atlas; supervoxel; superpixel; Markov random field; registration;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="../homepage_files/paper_SupervoxelMRFSeg.pdf" target="_blank" rel="nofollow">Supervoxel-Based Hierarchical Markov Random Field Framework for Multi-Atlas Segmentation</a></h1>
+    <h2>MICCAI Workshop 2016</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.com/citations?user=X3EHNXUAAAAJ&hl=zh-CN" target="_blank" rel="nofollow">Hongzhi Wang</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://picsl.upenn.edu/people/faculty-staff/paul-yushkevich/" target="_blank" rel="nofollow">Paul Yushkevich</a><sup>3</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Virginina&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. IBM Almaden Research Center&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. University of Pennsylvania
+    </div>
+</div>
+      
+    <center><img src="./SupervoxelMRFSeg/teaser.png" border="0" width="800px"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Multi-atlas segmentation serves as an important technique for quantitative analysis of medical images. In many applications, top performing techniques rely on computationally expensive deformable registration to transfer labels from atlas images to the target image. We propose a more computationally efficient label transfer strategy that uses supervoxel matching regularized by Markov random field (MRF), followed by regional voxel-wise joint label fusion and a second MRF. We evaluate this hierarchical MRF framework for multi-label diencephalon segmentation from the MICCAI 2013 SATA Challenge. Our segmentation results are comparable to the top-tier one obtained by deformable registration, but with much lower computational complexity.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Multi-label diencephalon segmentation</h3>
+  <center><img src="./SupervoxelMRFSeg/segmentation.png" border="0" width="800px"></center>
+  <h3>Accuracy and efficiency</h3>
+  <center><img src="./SupervoxelMRFSeg/results.png" border="0" width="400px"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/paper_SupervoxelMRFSeg.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./SupervoxelMRFSeg/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/paper_SupervoxelMRFSeg.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/slides_SupervoxelMRFSeg.pptx" target="_blank" rel="nofollow"><img style="height:175px" src="./SupervoxelMRFSeg/slides_page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/slides_SupervoxelMRFSeg.pptx" target="_blank" rel="nofollow">Slides</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2016supervoxel,
+  author = {Yu, Ning and Wang, Hongzhi and Yushkevich, Paul},
+  title = {Supervoxel-Based Hierarchical Markov Random Field Framework for Multi-Atlas Segmentation},
+  booktitle = {International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI) Workshop},
+  year = {2016}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  This research is supported by NIH grant R01 EB017255.
+
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_FastPD.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.414.6433&rep=rep1&type=pdf" target="_blank" rel="nofollow">B. Glocker, N. Komodakis, G. Tziritas, N. Navab, N. Paragios. Dense Image Registration through MRFs and Efficient Linear Programming. MIA 2008.</a><br>
+          <b>Comment:</b> The FastPD algorithm that is used in our work to solve Markov Random Fields.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_JointLabelFusion.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6226425" target="_blank" rel="nofollow">H. Wang, J. Suh, S. Das, J. Pluta, C. Craige, P. Yushkevich. Multi-Atlas Segmentation with Joint Label Fusion. PAMI 2013.</a><br>
+          <b>Comment:</b> A backbone component that is used in our work to account for correlation and redundancy between atlases.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_CorrectiveLearning.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3049832/pdf/nihms-265549.pdf" target="_blank" rel="nofollow">H. Wang, S. Das, J. Suh, M. Altinay, J. Pluta, C. Craige, B. Avants, P. Yushkevich. A Learning-Based Wrapper Method to Correct Systematic Errors in Automatic Image Segmentation: Consistently Improved Performance in Hippocampus, Cortex and Brain Segmentation. Neuroimage 2012.</a><br>
+          <b>Comment:</b> A wrapper method that is used in our work to improve the performance of existing segmentation algorithms using training data.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_SupervoxelSeg.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://link.springer.com/content/pdf/10.1007/978-3-642-40760-4_67.pdf" target="_blank" rel="nofollow">H. Wang, P. Yushkevich. Multi-atlas Segmentation without Registration: A Supervoxel-Based Approach. MICCAI 2013.</a><br>
+          <b>Comment:</b> A supervoxel-based multi-atlas segmentation baseline method that performs undesirably without pre-registration.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_SupervoxelReg.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ora.ox.ac.uk/objects/uuid:49749a6f-4b05-4999-99d4-ae4f4ceb7d8d/download_file?file_format=pdf&safe_filename=MEDIA-D-14-00177_mycopy.pdf&type_of_work=Journal+article" target="_blank" rel="nofollow">M. Heinrich, I. Simpson, B. Papiez,  M. Brady, J. Schnabel. Deformable Image Registration by Combining Uncertainty Estimates from Supervoxel Belief Propagation. MIA 2016.</a><br>
+          <b>Comment:</b> A supervoxel-based image registration method similar in spirit to our work.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./SupervoxelMRFSeg/logo_AtlasForest.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://link.springer.com/content/pdf/10.1007/978-3-642-40760-4_9.pdf" target="_blank" rel="nofollow">D. Zikic, B. Glocker, A. Criminisi. Atlas Encoding by Randomized Forests for Efficient Label Propagation. MICCAI 2013.</a><br>
+          <b>Comment:</b> The state-of-the-art baseline method that has similar efficiency but worse segmentation accuracy.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
