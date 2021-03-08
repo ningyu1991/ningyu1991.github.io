@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Robust Feature Points Correspondences for Visual Object Tracking</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Matching visual appearances of target sample reservoir over consecutive image frames is the most critical issue in sequence-based object tracking. Recent literatures show the effectiveness of the utilization of local feature points set instead of any global feature vectors of patches. A traditional tracking-by-detection framework without taking advantages of geometric information, however, ignores more or less the potential contributions of feature points. This paper proposes a totally novel tracking-by-correspondences framework, a generative approach via an adaptively-selected robust appearance model, a one-step orient motion model based on points correspondences, an automatic scale determination and a clustered online updating target sample reservoir. Extensive experiments validate the accuracy and robustness of the proposed method, and demonstrate the improved performance has been competitive enough to surpass the state of this art."
+>
+<meta name="keywords" content="object tracking; feature point matching; point correspondences;sample reservoir;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="../homepage_files/paper_FeaturePointCorrespondencesTracking.pdf" target="_blank" rel="nofollow">Robust Feature Points Correspondences for Visual Object Tracking</a></h1>
+    <h2>Undergraduate Thesis 2013</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a>
+
+    </div>
+
+    <div class="affiliations">
+      Huazhong University of Science and Technology
+    </div>
+</div>
+      
+    <center><img src="./FeaturePointCorrespondencesTracking/teaser.png" border="0" width="500px"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Matching visual appearances of target sample reservoir over consecutive image frames is the most critical issue in sequence-based object tracking. Recent literatures show the effectiveness of the utilization of local feature points set instead of any global feature vectors of patches. A traditional tracking-by-detection framework without taking advantages of geometric information, however, ignores more or less the potential contributions of feature points. This paper proposes a totally novel tracking-by-correspondences framework, a generative approach via an adaptively-selected robust appearance model, a one-step orient motion model based on points correspondences, an automatic scale determination and a clustered online updating target sample reservoir. Extensive experiments validate the accuracy and robustness of the proposed method, and demonstrate the improved performance has been competitive enough to surpass the state of this art.
+</div>
+
+<div class="section demo">
+  <h2>Demos</h2>
+  <h3>Robust feature points selection</h3>
+  <center><img src="./FeaturePointCorrespondencesTracking/feature_point_selection.png" border="0" width="500px"></center>
+  <h3>Object tracking</h3>
+  <center><img src="./FeaturePointCorrespondencesTracking/tracking.png" border="0" width="800px"></center>
+  <h3>Results and comparisons</h3>
+  <center><img src="./FeaturePointCorrespondencesTracking/results.png" border="0" width="500px"></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/paper_FeaturePointCorrespondencesTracking.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./FeaturePointCorrespondencesTracking/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/paper_FeaturePointCorrespondencesTracking.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/slides_FeaturePointCorrespondencesTracking.pptx" target="_blank" rel="nofollow"><img style="height:175px" src="./FeaturePointCorrespondencesTracking/slides_page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/slides_FeaturePointCorrespondencesTracking.pptx" target="_blank" rel="nofollow">Slides</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+<br>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2013robust,
+  author = {Yu, Ning},
+  title = {Robust Feature Points Correspondences for Visual Object Tracking},
+  booktitle = {Huazhong University of Science and Technology (HUST) Undergraduate Thesis},
+  year = {2013}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  I acknowledge <a href="http://eic.hust.edu.cn/professor/liuwenyu/" target="_blank" rel="nofollow">Wenyu Liu</a> and <a href="https://www.vlrlab.net/~yuzhou/" target="_blank" rel="nofollow">Yu Zhou</a> for their constructive advice in general. This research is supported by Microsoft Young Fellowship, Chinese National Fellowship, and HUST Undergraduate Research and Innovation Funding.
+
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./FeaturePointCorrespondencesTracking/logo_MaxWeightCliques.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6247735" target="_blank" rel="nofollow">T. Ma, L. Latecki. Maximum Weight Cliques with Mutex Constraints for Video Object Segmentation. CVPR 2012.</a><br>
+          <b>Comment:</b> The algorithm that is used in our work for robust feature point selection given mutex constraints.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./FeaturePointCorrespondencesTracking/logo_CommonPatternDiscovery.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=5539780" target="_blank" rel="nofollow">H. Liu, S. Yan. Common Visual Pattern Discovery via Spatially Coherent Correspondences. CVPR 2010.</a><br>
+          <b>Comment:</b> The algorithm that is used in our work for robust point correspondence discovery.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./FeaturePointCorrespondencesTracking/logo_NormalizedCut.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=868688" target="_blank" rel="nofollow">J. Shi, J. Malik. Normalized Cuts and Image Segmentation. PAMI 2000.</a><br>
+          <b>Comment:</b> The algorithm that is used in our work for reservoir clustering and updates.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./FeaturePointCorrespondencesTracking/logo_NNClassifier.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.460.6778&rep=rep1&type=pdf" target="_blank" rel="nofollow">S. Gu, Y. Zheng, C. Tomasi. Efficient Visual Object Tracking with Online Nearest Neighbor Classifier. ACCV 2010.</a><br>
+          <b>Comment:</b> A baseline tracking framework that combines nearest neighbor classifier with efficient subwindow search as the motion model.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
