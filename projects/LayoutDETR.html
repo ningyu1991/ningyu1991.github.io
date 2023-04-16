@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LayoutDETR: Detection Transformer Is a Good Multimodal Layout Designer</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Graphic layout designs play an essential role in visual communication. Yet handcrafting layout designs is skill-demanding, time-consuming, and non-scalable to batch production. Generative models emerge to make design automation scalable but it remains non-trivial to produce designs that comply with designers' multimodal desires, i.e., constrained by background images and driven by foreground content. We propose LayoutDETR that inherits the high quality and realism from generative modeling, while reformulating content-aware requirements as a detection problem: we learn to detect in a background image the reasonable locations, scales, and spatial relations for multimodal foreground elements in a layout. Our solution sets a new state-of-the-art performance for layout generation on public benchmarks and on our newly-curated ad banner dataset. We integrate our solution into a graphical system that facilitates user studies, and show that users prefer our designs over baselines by significant margins."
+>
+<meta name="keywords" content="Graphic design; layouts; multimodal; generative models; detection; GAN; VAE; transformers;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/2212.09877.pdf" target="_blank" rel="nofollow">LayoutDETR:<br>Detection Transformer Is a Good Multimodal Layout Designer</a></h1>
+    <h2>arXiv 2023</h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://scholar.google.com/citations?user=0Hr1SOUAAAAJ&hl=en" target="_blank" rel="nofollow">Chia-Chih Chen</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/zeyuan-chen-0253b6141/" target="_blank" rel="nofollow">Zeyuan Chen</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://memray.me/" target="_blank" rel="nofollow">Rui Meng</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/whoisgang/" target="_blank" rel="nofollow">Gang Wu</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/paul-josel/" target="_blank" rel="nofollow">Paul Josel</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://www.niebles.net/" target="_blank" rel="nofollow">Juan Carlos Niebles</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://cmxiong.com/" target="_blank" rel="nofollow">Caiming Xiong</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/ran-x-a2765924/" target="_blank" rel="nofollow">Ran Xu</a>
+
+    </div>
+
+    <div class="affiliations">
+      Salesforce Research
+    </div>
+</div>
+      
+    <center><img src="./LayoutDETR/teaser.png" border="0" width="33%"><img src="./LayoutDETR/framework_architecture.png" border="0" width="66%"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Graphic layout designs play an essential role in visual communication. Yet handcrafting layout designs is skill-demanding, time-consuming, and non-scalable to batch production. Generative models emerge to make design automation scalable but it remains non-trivial to produce designs that comply with designers' multimodal desires, i.e., constrained by background images and driven by foreground content. We propose LayoutDETR that inherits the high quality and realism from generative modeling, while reformulating content-aware requirements as a detection problem: we learn to detect in a background image the reasonable locations, scales, and spatial relations for multimodal foreground elements in a layout. Our solution sets a new state-of-the-art performance for layout generation on public benchmarks and on our newly-curated ad banner dataset. We integrate our solution into a graphical system that facilitates user studies, and show that users prefer our designs over baselines by significant margins.
+</div>
+
+<div class="section related work">
+  <h2>Taxonomy of related work</h2>
+  <center>
+    <img src="./LayoutDETR/table_related_work.png" border="0" width="60%">
+  </center>
+</div>
+
+<div class="section results">
+  <h2>Results</h2>
+  <h3>Qualitative results</h3>
+  <center><img src="./LayoutDETR/samples_ads_cgl_clay.jpg" border="0" width="90%"></center>
+  <center><img src="./LayoutDETR/samples_more_ads_cgl.jpg" border="0" width="60%"></center>
+  <h3>Quantitative results</h3>
+  <center><img src="./LayoutDETR/table_results.png" border="0" width="60%"></center>
+  <center><img src="./LayoutDETR/radar_plot_results.png" border="0" width="90%"></center>
+</div>
+
+<div class="section paper">
+  <h2>Paper</h2>
+  <center>
+    <a href="https://arxiv.org/pdf/2212.09877.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./LayoutDETR/page1.png"></a>
+  </center>
+</div>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/salesforce/LayoutDETR" target="_blank" rel="nofollow"><img src="./LayoutDETR/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@article{yu2023layoutdetr,
+    title={LayoutDETR: Detection Transformer Is a Good Multimodal Layout Designer},
+    author={Yu, Ning and Chen, Chia-Chih and Chen, Zeyuan and Meng, Rui and Wu, Gang and Josel, Paul and Niebles, Juan Carlos and Xiong, Caiming and Xu, Ran},
+    journal={arXiv preprint arXiv:2212.09877},
+    year={2023}
+  }</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  We thank Abigail Kutruff, <a href="https://www.linkedin.com/in/brianbrechbuhl" target="_blank" rel="nofollow">Brian Brechbuhl</a>, <a href="https://ca.linkedin.com/in/elhametemad" target="_blank" rel="nofollow">Elham Etemad</a>, and <a href="https://www.linkedin.com/in/amruthakrishnan" target="_blank" rel="nofollow">Amrutha Krishnan</a> from Salesforce for constructive advice.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_LayoutGANpp.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2108.00871.pdf" target="_blank" rel="nofollow">K. Kikuchi, E. Simo-Serra, M. Otani, K. Yamaguchi. Constrained graphic layout generation via latent optimization. MM 2021.</a><br>
+          <b>Comment:</b> A layout GAN baseline method that is used as our GAN backbone.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_DETR.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2005.12872.pdf," target="_blank" rel="nofollow">N. Carion, F. Massa, G. Synnaeve, N. Usunier, A. Kirillov, S. Zagoruyko. End-to-end object detection with transformers. ECCV 2020.</a><br>
+          <b>Comment:</b> An object detection pipeline that is used for our background image understanding and bounding box generation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_CGL-GAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2205.00303.pdf" target="_blank" rel="nofollow">M. Zhou, C. Xu, Y. Ma, T. Ge, Y. Jiang, W. Xu. Composition-aware Graphic Layout GAN for Visual-textual Presentation Designs. IJCAI 2022.</a><br>
+          <b>Comment:</b> A GAN + DETR based baseline method for graphical layout design. Their CGL dataset is used for our experimental benchmarking.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_ICVT.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2209.00852.pdf" target="_blank" rel="nofollow">Y. Cao, Y. Ma, M. Zhou, C. Liu, H. Xie, T. Ge, Y. Jiang. Geometry Aligned Variational Transformer for Image-conditioned Layout Generation. MM 2022.</a><br>
+          <b>Comment:</b> A VAE + DETR based baseline method for graphical layout design. 
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_PittAds.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://openaccess.thecvf.com/content_cvpr_2017/papers/Hussain_Automatic_Understanding_of_CVPR_2017_paper.pdf" target="_blank" rel="nofollow">Z. Hussain, M. Zhang, X. Zhang, K. Ye, C. Thomas, Z. Agha, N. Ong, A. Kovashka. Automatic understanding of image and video advertisements. CVPR 2017.</a><br>
+          <b>Comment:</b> An ad banner dataset that is used to benchmark our experiments.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./LayoutDETR/logo_CLAY.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2201.04100.pdf" target="_blank" rel="nofollow">G. Li, G. Baechler, M. Tragut, Y. Li. Learning to denoise raw mobile UI layouts for improving datasets at scale. CHI 2022.</a><br>
+          <b>Comment:</b> A mobile application UI dataset that is used to benchmark our experiments.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
