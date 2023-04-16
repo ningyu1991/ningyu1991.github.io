@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Artificial Fingerprinting for Generative Models: Rooting Deepfake Attribution in Training Data</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Photorealistic image generation has reached a new level of quality due to the breakthroughs of generative adversarial networks (GANs). Yet, the dark side of such deepfakes, the malicious use of generated media, raises concerns about visual misinformation. While existing research work on deepfake detection demonstrates high accuracy, it is subject to advances in generation techniques and adversarial iterations on detection countermeasure techniques. Thus, we seek a proactive and sustainable solution on deepfake detection, that is agnostic to the evolution of generative models, by introducing artificial fingerprints into the models. Our approach is simple and effective. We first embed artificial fingerprints into training data, then validate a surprising discovery on the transferability of such fingerprints from training data to generative models, which in turn appears in the generated deepfakes. Experiments show that our fingerprinting solution (1) holds for a variety of cutting-edge generative models, (2) leads to a negligible side effect on generation quality, (3) stays robust against image-level and model-level perturbations, (4) stays hard to be detected by adversaries, and (5) converts deepfake detection and attribution into trivial tasks and outperforms the recent state-of-the-art baselines. Our solution closes the responsibility loop between publishing pre-trained generative model inventions and their possible misuses, which makes it independent of the current arms race."
+>
+<meta name="keywords" content="GAN; generative models; fingerprints; watermarking; deep fake detection; attribution; forensics; security;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/2007.08457.pdf" target="_blank" rel="nofollow">Artificial Fingerprinting for Generative Models:<br>Rooting Deepfake Attribution in Training Data</a></h1>
+    <h2>ICCV 2021 <strong style="color: red;">Oral</strong></h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>*1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/vladislav-skripniuk-8a8891143/?originalSubdomain=ru" target="_blank" rel="nofollow">Vladislav Skripniuk</a><sup>*3</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://cispa.de/en/people/sahar.abdelnabi#profile" target="_blank" rel="nofollow">Sahar Abdelnabi</a><sup>3</sup>
+      <a href="https://cispa.saarland/group/fritz/" target="_blank" rel="nofollow">Mario Fritz</a><sup>3</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. University of Maryland&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. Max Planck Institute for Informatics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. CISPA Helmholtz Center for Information Security
+    </div>
+</div>
+      
+    <center><img src="./ArtificialGANFingerprints/teaser.png" border="0" width="90%"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Photorealistic image generation has reached a new level of quality due to the breakthroughs of generative adversarial networks (GANs). Yet, the dark side of such deepfakes, the malicious use of generated media, raises concerns about visual misinformation. While existing research work on deepfake detection demonstrates high accuracy, it is subject to advances in generation techniques and adversarial iterations on detection countermeasure techniques. Thus, we seek a proactive and sustainable solution on deepfake detection, that is agnostic to the evolution of generative models, by introducing artificial fingerprints into the models.
+    <br>
+    Our approach is simple and effective. We first embed artificial fingerprints into training data, then validate a surprising discovery on the transferability of such fingerprints from training data to generative models, which in turn appears in the generated deepfakes. Experiments show that our fingerprinting solution (1) holds for a variety of cutting-edge generative models, (2) leads to a negligible side effect on generation quality, (3) stays robust against image-level and model-level perturbations, (4) stays hard to be detected by adversaries, and (5) converts deepfake detection and attribution into trivial tasks and outperforms the recent state-of-the-art baselines. Our solution closes the responsibility loop between publishing pre-trained generative model inventions and their possible misuses, which makes it independent of the current arms race.
+</div>
+
+<div class="section results">
+  <h2>Results</h2>
+  <h3>Samples on CelebA human faces 128&#215;128</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_CelebA.png" border="0" width="90%"></center>
+  <h3>Samples on LSUN bedrooms 128&#215;128</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_LSUN_bedroom.png" border="0" width="90%"></center>
+  <h3>Samples on LSUN cats 256&#215;256</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_LSUN_cat.png" border="0" width="90%"></center>
+  <h3>Samples on CIFAR-10 32&#215;32</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_CIFAR-10.png" border="0" width="90%"></center>
+  <h3>Samples on Horse2Zebra 256&#215;256</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_Horse2Zebra.png" border="0" width="90%"></center>
+  <h3>Samples on Cat2Dog 256&#215;256</h3>
+  <center><img src="./ArtificialGANFingerprints/samples_Cat2Dog.png" border="0" width="90%"></center>
+  <h3>Quantitative evaluation</h3>
+  <center><img src="./ArtificialGANFingerprints/table_results.png" border="0" width="60%"></center>
+  <h3>Robustness evaluation on CelebA human faces 128&#215;128</h3>
+  <center><img src="./ArtificialGANFingerprints/plot_robustness.png" border="0" width="90%"></center>
+</div>
+
+<div class="section video">
+  <h2>Video</h2>
+  <br>
+  <center><iframe width="840" height="560"
+    src="https://www.youtube.com/watch?v=j8bcOHhu4Lg">
+    </iframe></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="https://arxiv.org/pdf/2007.08457.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./ArtificialGANFingerprints/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="https://arxiv.org/pdf/2007.08457.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/poster_ArtificialGANFingerprints.pdf" target="_blank" rel="nofollow"><img style="height:175px" src="./ArtificialGANFingerprints/poster_ArtificialGANFingerprints.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/poster_ArtificialGANFingerprints.pdf" target="_blank" rel="nofollow">Poster</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/ArtificialGANFingerprints" target="_blank" rel="nofollow"><img src="./ArtificialGANFingerprints/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+
+<div class="section press">
+  <h2>Press coverage</h2>
+  <center>
+    <a href="https://mp.weixin.qq.com/s/PDxLWP7CYpDcD5y3aGQ7Rg" target="_blank" rel="nofollow"><img src="./ArtificialGANFingerprints/press_ArtificialGANFingerprints.gif" width="270 px"></a>
+    <br>
+    <br>
+    <a href="https://mp.weixin.qq.com/s/PDxLWP7CYpDcD5y3aGQ7Rg" target="_blank" rel="nofollow">thejiangmen Academia News</a>
+  </center>
+</div>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2021artificial,
+  author={Yu, Ning and Skripniuk, Vladislav and Abdelnabi, Sahar and Fritz, Mario},
+  title={Artificial Fingerprinting for Generative Models: Rooting Deepfake Attribution in Training Data},
+  booktitle = {IEEE International Conference on Computer Vision (ICCV)},
+  year={2021}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  We thank <a href="http://www.cs.umd.edu/~djacobs/" target="_blank" rel="nofollow">David Jacobs</a>, <a href="http://www.cs.umd.edu/~zwicker/" target="_blank" rel="nofollow">Matthias Zwicker</a>, <a href="https://www.cs.umd.edu/~abhinav/" target="_blank" rel="nofollow">Abhinav Shrivastava</a>, <a href="http://users.umiacs.umd.edu/~yaser/" target="_blank" rel="nofollow">Yaser Yacoob</a>, and <a href="https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/people/apratim-bhattacharyya/" target="_blank" rel="nofollow">Apratim Bhattacharyya</a> for constructive discussion and advice.
+  <br>
+  Ning Yu was partially supported by <a href="https://blog.twitch.tv/en/2021/01/07/introducing-our-2021-twitch-research-fellows/" target="_blank" rel="nofollow">Twitch Research Fellowship</a>. Vladislav Skripniuk was partially supported by IMPRS scholarship from Max Planck Institute. This work was also supported, in part, by the DARPA SemaFor (HR001119S0085) program. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the DARPA.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_GANFingerprints.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1811.08180.pdf" target="_blank" rel="nofollow">N. Yu, L. Davis, M. Fritz. Attributing fake images to gans: Learning and analyzing gan fingerprints. ICCV 2019.</a><br>
+          <b>Comment:</b> Our earlier work. A GAN-based Deepfake detection and attribution baseline method that extracts high/low-level and high/low-frequency image features in closed worlds.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_CNNDetection.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2104.02984" target="_blank" rel="nofollow">S.Y. Wang, O. Wang, R. Zhang, A. Owens, A. Efros. CNN-generated images are surprisingly easy to spot... for now. CVPR 2020.</a><br>
+          <b>Comment:</b> A CNN-based Deepfake detection baseline method that generalizes to open-world binary classification using data augmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_ProGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1710.10196.pdf?__hstc=200028081.1bb630f9cde2cb5f07430159d50a3c91.1524009600081.1524009600082.1524009600083.1&__hssc=200028081.1.1524009600084&__hsfp=1773666937" target="_blank" rel="nofollow">T. Karras, T. Aila, S. Laine, J. Lehtinen. Progressive Growing of Gans for Improved Quality, Stability, and Variation. ICLR 2018.</a><br>
+          <b>Comment:</b> A state-of-the-art unconditional GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_StyleGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Karras_A_Style-Based_Generator_Architecture_for_Generative_Adversarial_Networks_CVPR_2019_paper.pdf" target="_blank" rel="nofollow">T. Karras, S. Laine, T. Aila. A style-based generator architecture for generative adversarial networks. CVPR 2019.</a><br>
+          <b>Comment:</b> A state-of-the-art unconditional GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_StyleGAN2.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Karras_Analyzing_and_Improving_the_Image_Quality_of_StyleGAN_CVPR_2020_paper.pdf" target="_blank" rel="nofollow">T. Karras, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, T. Aila. Analyzing and improving the image quality of stylegan. CVPR 2020.</a><br>
+          <b>Comment:</b> A state-of-the-art unconditional GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_BigGAN.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1809.11096.pdf%20http://arxiv.org/abs/1809.11096" target="_blank" rel="nofollow">A. Brock, J. Donahue, K. Simonyan. Large scale GAN training for high fidelity natural image synthesis. ICLR 2019.</a><br>
+          <b>Comment:</b> A state-of-the-art class-conditional GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ArtificialGANFingerprints/logo_CUT.gif" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2007.15651" target="_blank" rel="nofollow">T. Park, A. Efros, R. Zhang, J.Y. Zhu. Contrastive learning for unpaired image-to-image translation. ECCV 2020.</a><br>
+          <b>Comment:</b> A state-of-the-art image-to-image GAN source for our generated image detection and attribution.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
