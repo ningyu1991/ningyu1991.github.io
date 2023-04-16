@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Responsible Disclosure of Generative Models Using Scalable Fingerprinting</title>
+
+<!-- Meta tags for search engines to crawl -->
+<meta name="robots" content="index,follow">
+<meta name="description" content="Over the past years, deep generative models have achieved a new level of performance. Generated data has become difficult, if not impossible, to be distinguished from real data. While there are plenty of use cases that benefit from this technology, there are also strong concerns on how this new technology can be misused to generate deep fakes and enable misinformation at scale. Unfortunately, current deep fake detection methods are not sustainable, as the gap between real and fake continues to close. In contrast, our work enables a responsible disclosure of such state-of-the-art generative models, that allows model inventors to fingerprint their models, so that the generated samples containing a fingerprint can be accurately detected and attributed to a source. Our technique achieves this by an efficient and scalable ad-hoc generation of a large population of models with distinct fingerprints. Our recommended operation point uses a 128-bit fingerprint which in principle results in more than $10^{38}$ identifiable models. Experiments show that our method fulfills key properties of a fingerprinting mechanism and achieves effectiveness in deep fake detection and attribution."
+>
+<meta name="keywords" content="GAN; generative models; fingerprints; watermarking; modulation; deep fake detection; attribution; forensics; security;">
+<link rel="author" href="https://ningyu1991.github.io/">
+
+<!-- Fonts and stuff -->
+<link href="./css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./project.css" media="screen">
+<link rel="stylesheet" type="text/css" media="screen" href="./iconize.css">
+
+<style>
+  .layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+    box-shadow:
+            0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+            5px 5px 0 0px #fff, /* The second layer */
+            5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+            10px 10px 0 0px #fff, /* The third layer */
+            10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+            15px 15px 0 0px #fff, /* The fourth layer */
+            15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+            20px 20px 0 0px #fff, /* The fifth layer */
+            20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+            25px 25px 0 0px #fff, /* The fifth layer */
+            25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+    margin-left: 10px;
+    margin-right: 45px;
+  }
+</style>
+
+<script async="" src="./prettify.js"></script>
+
+</head>
+
+<body>
+  <div id="content">
+    <div id="content-inner">
+      
+    <div class="section head">
+    <h1><a href="https://arxiv.org/pdf/2012.08726.pdf" target="_blank" rel="nofollow">Responsible Disclosure of Generative Models Using Scalable Fingerprinting</a></h1>
+    <h2>ICLR 2022 <strong style="color: red;">Spotlight</strong></h2>
+    <br>
+
+    <div class="authors">
+      <a href="https://ningyu1991.github.io/" target="_blank" rel="nofollow">Ning Yu</a><sup>1,2,3*</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/vladislav-skripniuk-8a8891143/?originalSubdomain=ru" target="_blank" rel="nofollow">Vladislav Skripniuk</a><sup>4*</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://dingfanchen.github.io/homepage/" target="_blank" rel="nofollow">Dingfan Chen</a><sup>4</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="http://users.umiacs.umd.edu/~lsd/" target="_blank" rel="nofollow">Larry Davis</a><sup>2</sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="https://cispa.saarland/group/fritz/" target="_blank" rel="nofollow">Mario Fritz</a><sup>4</sup>
+
+    </div>
+
+    <div class="affiliations">
+      1. Salesforce Research&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      2. University of Maryland&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      3. Max Planck Institute for Informatics&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      4. CISPA Helmholtz Center for Information Security
+    </div>
+</div>
+      
+    <center><img src="./ScalableGANFingerprints/teaser.png" border="0" width="90%"></center>
+
+<div class="section abstract">
+    <h2>Abstract</h2>
+    <br>
+    Over the past years, deep generative models have achieved a new level of performance. Generated data has become difficult, if not impossible, to be distinguished from real data. While there are plenty of use cases that benefit from this technology, there are also strong concerns on how this new technology can be misused to generate deep fakes and enable misinformation at scale. Unfortunately, current deep fake detection methods are not sustainable, as the gap between real and fake continues to close. In contrast, our work enables a responsible disclosure of such state-of-the-art generative models, that allows model inventors to fingerprint their models, so that the generated samples containing a fingerprint can be accurately detected and attributed to a source. Our technique achieves this by an efficient and scalable ad-hoc generation of a large population of models with distinct fingerprints. Our recommended operation point uses a 128-bit fingerprint which in principle results in more than $10^{38}$ identifiable models. Experiments show that our method fulfills key properties of a fingerprinting mechanism and achieves effectiveness in deep fake detection and attribution.
+</div>
+
+<div class="section results">
+  <h2>Results</h2>
+  <h3>Samples on CelebA 128&#215;128</h3>
+  <center><img src="./ScalableGANFingerprints/samples_CelebA.png" border="0" width="90%"></center>
+  <h3>Samples on LSUN Bedrooms 128&#215;128</h3>
+  <center><img src="./ScalableGANFingerprints/samples_LSUN_Bedroom.png" border="0" width="90%"></center>
+  <h3>Samples on LSUN Cats 256&#215;256</h3>
+  <center><img src="./ScalableGANFingerprints/samples_LSUN_Cat.png" border="0" width="90%"></center>
+  <h3>Fingerprint visualization</h3>
+  <center><img src="./ScalableGANFingerprints/samples_fingerprints.png" border="0" width="90%"></center>
+  <h3>Fingerprint detection accuracy and image fidelity</h3>
+  <center><img src="./ScalableGANFingerprints/table_fingerprint_acc_fidelity.png" border="0" width="40%"></center>
+  <h3>Robustness against image perturbations on CelebA 128&#215;128</h3>
+  <center><img src="./ScalableGANFingerprints/plots_robustness.png" border="0" width="90%"></center>
+  <h3>Deepfake detection and attribution accuracy</h3>
+  <center><img src="./ScalableGANFingerprints/table_deepfake_acc.png" border="0" width="30%"></center>
+</div>
+
+<div class="section video">
+  <h2>Video</h2>
+  <br>
+  <center><iframe width="840" height="560"
+    src="https://www.youtube.com/embed/UlpGtwEof3o">
+    </iframe></center>
+</div>
+
+<div class="section paper">
+  <h2>Materials</h2>
+  <center>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center>
+            <a href="https://arxiv.org/pdf/2012.08726.pdf" target="_blank" rel="nofollow"><img class="layered-paper-big" style="height:175px" src="./ScalableGANFingerprints/page1.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="https://arxiv.org/pdf/2012.08726.pdf" target="_blank" rel="nofollow">Paper</a>
+          </center>
+        </td>
+        <td style="border: none;">
+          <center>
+            <a href="../homepage_files/poster_ScalableGANFingerprints.pdf" target="_blank" rel="nofollow"><img style="height:175px" src="./ScalableGANFingerprints/poster_ScalableGANFingerprints.png"></a>
+            <br>
+            <br>
+            <br>
+            <a href="../homepage_files/poster_ScalableGANFingerprints.pdf" target="_blank" rel="nofollow">Poster</a>
+          </center>
+        </td>
+      </tr>
+    </tbody></table>
+</center>
+</div>
+        
+<div class="section code">
+  <h2>Code</h2>
+  <center>
+    <a href="https://github.com/ningyu1991/ScalableGANFingerprints" target="_blank" rel="nofollow"><img src="./ScalableGANFingerprints/icon_arXiv.png" width="270 px"></a>
+  </center>
+</div>
+
+<div class="section press">
+  <h2>Press coverage</h2>
+  <center>
+    <a href="https://mp.weixin.qq.com/s/v8hQT8VMjxe0zHybhxu2Aw" target="_blank" rel="nofollow"><img src="./ScalableGANFingerprints/press_ScalableGANFingerprints.gif" width="270 px"></a>
+    <br>
+    <br>
+    <a href="https://mp.weixin.qq.com/s/v8hQT8VMjxe0zHybhxu2Aw" target="_blank" rel="nofollow">thejiangmen Academia News</a>
+  </center>
+</div>
+
+<div class="section citation">
+  <h2>Citation</h2>
+  <div class="section bibtex">
+    <pre>@inproceedings{yu2022responsible,
+  title={Responsible Disclosure of Generative Models Using Scalable Fingerprinting},
+  author={Yu, Ning and Skripniuk, Vladislav and Chen, Dingfan and Davis, Larry and Fritz, Mario},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2022}
+}</pre>
+  </div>
+</div>
+
+<div class="section acknowledgement">
+  <h2>Acknowledgement</h2>
+  <br>
+  We thank <a href="http://www.cs.umd.edu/~djacobs/" target="_blank" rel="nofollow">David Jacobs</a>, <a href="http://www.cs.umd.edu/~zwicker/" target="_blank" rel="nofollow">Matthias Zwicker</a>, <a href="https://www.cs.umd.edu/~abhinav/" target="_blank" rel="nofollow">Abhinav Shrivastava</a>, and <a href="http://users.umiacs.umd.edu/~yaser/" target="_blank" rel="nofollow">Yaser Yacoob</a> for constructive discussion and advice.
+  <br>
+  Ning Yu was partially supported by <a href="https://blog.twitch.tv/en/2021/01/07/introducing-our-2021-twitch-research-fellows/" target="_blank" rel="nofollow">Twitch Research Fellowship</a>. Vladislav Skripniuk was partially supported by IMPRS scholarship from Max Planck Institute. This work was also supported, in part, by the US Defense Advanced Research Projects Agency (DARPA) Media Forensics (MediFor) Program under FA87501620191 and Semantic Forensics (SemaFor) Program under HR001120C0124. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the DARPA.
+  <br>
+  We acknowledge the Maryland Advanced Research Computing Center for providing computing resources.
+</div>
+
+<div class="section relatedwork">
+    <h2>Related Work</h2>
+    <br>
+    <table style="border-collapse: collapse; border: none;"><tbody>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ScalableGANFingerprints/logo_GANFingerprints.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1811.08180.pdf" target="_blank" rel="nofollow">N. Yu, L. Davis, M. Fritz. Attributing fake images to gans: Learning and analyzing gan fingerprints. ICCV 2019.</a><br>
+          <b>Comment:</b> Our earlier work. A GAN-based Deepfake detection and attribution baseline method that extracts high/low-level and high/low-frequency image features in closed worlds.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ScalableGANFingerprints/logo_CNNDetection.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/1912.11035" target="_blank" rel="nofollow">S.Y. Wang, O. Wang, R. Zhang, A. Owens, A. Efros. CNN-generated images are surprisingly easy to spot... for now. CVPR 2020.</a><br>
+          <b>Comment:</b> A CNN-based Deepfake detection baseline method that generalizes to open-world binary classification using data augmentation.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <img src="./ScalableGANFingerprints/logo_ArtificialGANFingerprints.png" class="publogo" width="200 px">
+        </td>
+        <td style="border: none;">
+          <a href="https://arxiv.org/pdf/2007.08457.pdf" target="_blank" rel="nofollow">N. Yu, V. Skripniuk, S. Abdelnabi, M. Fritz. Artificial GAN fingerprints: Rooting deepfake attribution in training data. ICCV 2021.</a><br>
+          <b>Comment:</b> Our earlier work. A proactive Deepfake detection and attribution baseline method that fingerprints training dataset.
+        </td>
+      </tr>
+      <tr style="border: none;">
+        <td style="border: none;">
+          <center><img src="./ScalableGANFingerprints/logo_StyleGAN2.png" class="publogo" width="70 px"></center>
+        </td>
+        <td style="border: none;">
+          <a href="https://openaccess.thecvf.com/content_CVPR_2020/papers/Karras_Analyzing_and_Improving_the_Image_Quality_of_StyleGAN_CVPR_2020_paper.pdf" target="_blank" rel="nofollow">T. Karras, S. Laine, M. Aittala, J. Hellsten, J. Lehtinen, T. Aila. Analyzing and improving the image quality of stylegan. CVPR 2020.</a><br>
+          <b>Comment:</b> A state-of-the-art GAN method that is used as our backbone.
+        </td>
+      </tr>
+    </tbody></table>
+</div>
+
+</body></html>
